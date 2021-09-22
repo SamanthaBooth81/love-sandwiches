@@ -91,7 +91,7 @@ def get_last_5_entries_sales():
     the last 5 entries for each sandwich and returns the data
     as a list of lists.
     """
-    sales = SHEET.worksheet("sales")
+    sales = SHEET.worksheet("sales").
 
     columns = []
     for ind in range(1, 7):
@@ -131,5 +131,25 @@ def main():
     update_worksheet(stock_data, "stock")
 
 
-print("Welcome to Love Sandwiches Data Automation")
+print("Welcome to Love Sandwiches Data Automation \n")
 main()
+
+def get_stock_values(data):
+    """
+    Print out the calculated stock numbers for each sandwich type.
+    """
+    headings = SHEET.worksheet("stock").get_all_values()[0]
+
+    # headings = SHEET.worksheet('stock').row_values(1)
+
+    print("Make the following numbers of sandwiches for next market:\n")
+
+    # new_data = {}
+    # for heading, stock_num in zip(headings, data):
+    #     new_data[heading] = stock_num
+    # return new_data
+    
+    return {heading: data for heading, data in zip(headings, data)}
+    
+stock_values = get_stock_values(stock_data)
+print(stock_values)
