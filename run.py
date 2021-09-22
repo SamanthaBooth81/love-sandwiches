@@ -1,12 +1,12 @@
 import gspread
 from google.oauth2.service_account import Credentials
-from pprint import pprint
+# from pprint import pprint - not required for final project.
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
     "https://www.googleapis.com/auth/drive"
-    ]
+]
 
 CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
@@ -26,7 +26,7 @@ def get_sales_data():
         print("Data should be six numbers, separated by commas.")
         print("Example: 10,20,30,40,50,60\n")
 
-        data_str = input("Enter your data here: ")
+        data_str = input("Enter your data here: \n")
 
         sales_data = data_str.split(",")
 
@@ -54,7 +54,6 @@ def validate_data(values):
         return False
 
     return True
-
 
 # def update_sales_worksheet(data):
 #     """
@@ -96,13 +95,14 @@ def calculate_surplus_data(sales_row):
     print("Calculating surplus data...\n")
     stock = SHEET.worksheet("stock").get_all_values()
     stock_row = stock[-1]
-    
+
     surplus_data = []
     for stock, sales in zip(stock_row, sales_row):
         surplus = int(stock) - sales
         surplus_data.append(surplus)
 
     return surplus_data
+
 
 def get_last_5_entries_sales():
     """
@@ -118,6 +118,7 @@ def get_last_5_entries_sales():
         columns.append(column[-5:])
     return columns
 
+
 def calculate_stock_data(data):
     """
     Calculate the average stock for each item type, adding 10%
@@ -126,10 +127,11 @@ def calculate_stock_data(data):
     new_stock_data = []
     for column in data:
         int_column = [int(num) for num in column]
-        average = sum (int_column) / len(int_column) """could also use sum(int_column)/5 as we are calling the last 5 columns in this project"""
+        average = sum(int_column) / len(int_column) """could also use sum(int_column)/5 as we are calling the last 5 columns in this project"""
         stock_num = average * 1.1 """calculate 10% of average"""
         new_stock_num.append(round(stock_num))
     return new_surplus_data
+
 
 def main():
     """
